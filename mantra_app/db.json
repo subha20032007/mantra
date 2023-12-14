@@ -1,0 +1,49 @@
+{
+  "products": [
+    {
+      "name": "",
+      "img": "",
+      "price": "",
+      "brand": "",
+      "gender": "",
+      "category": "",
+      "id": 1
+    },
+    {
+      "name": "inkkar tshirt",
+      "img": "https://rukminim2.flixcart.com/image/312/312/xif0q/mobile/i/a/r/-original-imagtrf9qm3dufq9.jpeg?q=70",
+      "price": 200,
+      "brand": "ere",
+      "gender": "woman",
+      "category": "top-ware",
+      "id": 2
+    },
+    {
+      "name": "inkkar tshirt",
+      "img": "https://rukminim2.flixcart.com/image/312/312/xif0q/mobile/i/a/r/-original-imagtrf9qm3dufq9.jpeg?q=70",
+      "price": 200,
+      "brand": "ere",
+      "gender": "men",
+      "category": "top-ware",
+      "id": 3
+    },
+    {
+      "name": "Shirt For men",
+      "img": "https://rukminim2.flixcart.com/image/312/312/xif0q/mobile/i/a/r/-original-imagtrf9qm3dufq9.jpeg?q=70",
+      "price": 200,
+      "brand": "ere",
+      "gender": "men",
+      "category": "top-ware",
+      "id": 4
+    },
+    {
+      "name": "Lungi",
+      "img": "https://rukminim2.flixcart.com/image/312/312/xif0q/mobile/i/a/r/-original-imagtrf9qm3dufq9.jpeg?q=70",
+      "price": 200,
+      "brand": "ere",
+      "gender": "woman",
+      "category": "top-ware",
+      "id": 5
+    }
+  ]
+}
