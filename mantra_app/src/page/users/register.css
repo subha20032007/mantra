@@ -1,0 +1,13 @@
+.register-main{
+    display: flex;
+    /* flex-wrap: wrap; */
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    /* background-color:gray; */
+    /* height: 80dvh; */
+}
+.register-form{
+    width: 500px;
+    background-color: blur;
+}
