@@ -28,7 +28,7 @@ const Register = () => {
   const [passPwd2, setPassPwd2] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword2, setShowPassword2] = useState("false");
-  const [matchPass, setMatchPass] = useState(true);
+  const [matchPass, setMatchPass] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isErr, setIsErr] = useState(false);
 
@@ -42,18 +42,19 @@ const Register = () => {
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const passwordRegex =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+=[\]{}|\\,./<>?:;'\"`~]).{8,}$/;
+  // const passwordRegex =/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
   const handleMatch = () => {
     const match = passPwd.split("").join("");
     const match2 = passPwd2.split("").join("");
     console.log(match, match2);
     if (match !== match2) {
-      setMatchPass(false);
+      // setMatchPass(false);
       setIsErr(true);
       console.log("password not match");
-    } else {
-      setMatchPass(true);
+    } else{
+      // setMatchPass(true);
       setIsErr(false);
       console.log("password match");
     }
@@ -66,26 +67,27 @@ const Register = () => {
     mobile: mobile === "" || !/^[0-9]{11}$/.test(mobile),
     passPwd: !passwordRegex.test(passPwd),
     passPwd2: !passwordRegex.test(passPwd2),
-    // matchPass: matchPass !== isErr,
+    confirm: isErr,
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // await new Promise((resolve) => setTimeout(resolve, 2000));
+    await new Promise((resolve) => setTimeout(resolve, 2000));
 
     setIsSubmitting(false);
-    setFirstName("");
-    setLastName("");
-    setUserName("");
-    setEmail("");
-    setMobile("");
-    setPassPwd("");
-    setPassPwd2("");
+    setFirstName(firstName);
+    setLastName(lastName);
+    setUserName(userName);
+    setEmail(email);
+    setMobile(mobile);
+    setPassPwd(passPwd);
+    setPassPwd2(passPwd2);
     setShowPassword(false);
     setShowPassword2(false);
     // setMatchPass(false);
+    setIsSubmitting(false)
   };
 
   useEffect(() => {
@@ -168,9 +170,19 @@ const Register = () => {
               />
               <InputRightElement>
                 {showPassword ? (
-                  <VisibilityOffIcon onClick={() => setShowPassword(false)} />
+                  <VisibilityOffIcon
+                    onClick={() => setShowPassword(false)}
+                    style={{
+                      color: "gray",
+                    }}
+                  />
                 ) : (
-                  <VisibilityIcon onClick={() => setShowPassword(true)} />
+                  <VisibilityIcon
+                    onClick={() => setShowPassword(true)}
+                    style={{
+                      color: "gray",
+                    }}
+                  />
                 )}
               </InputRightElement>
             </InputGroup>
@@ -195,9 +207,19 @@ const Register = () => {
               />
               <InputRightElement>
                 {showPassword2 ? (
-                  <VisibilityOffIcon onClick={() => setShowPassword2(false)} />
+                  <VisibilityOffIcon
+                    onClick={() => setShowPassword2(false)}
+                    style={{
+                      color: "gray",
+                    }}
+                  />
                 ) : (
-                  <VisibilityIcon onClick={() => setShowPassword2(true)} />
+                  <VisibilityIcon
+                    onClick={() => setShowPassword2(true)}
+                    style={{
+                      color: "gray",
+                    }}
+                  />
                 )}
               </InputRightElement>
             </InputGroup>
@@ -208,9 +230,12 @@ const Register = () => {
                 special character.
               </FormErrorMessage>
             )}
-
-            {isErr ? (
-              <FormErrorMessage>Both passwords must match.</FormErrorMessage>
+            {isError.confirm ? (
+               <Stack direction="row">
+               <Badge variant="solid" colorScheme="red">
+                 Password is not same!
+               </Badge>
+             </Stack>
             ) : (
               <Stack direction="row">
                 <Badge variant="solid" colorScheme="green">
@@ -223,7 +248,6 @@ const Register = () => {
               <FormErrorMessage>Both passwords must match.</FormErrorMessage>
 
             } */}
-           
 
             <Button
               mt={4}
