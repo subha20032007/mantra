@@ -1,6 +1,6 @@
 // Import 
 import { initializeApp } from "firebase/app";
-import {getAuth, GoogleAuthProvider,signOut, signInWithEmailAndPassword} from 'firebase/auth'
+import {getAuth, GoogleAuthProvider,signOut, signInWithEmailAndPassword,createUserWithEmailAndPassword} from 'firebase/auth'
 const firebaseConfig = {
   apiKey: "AIzaSyC71Vxlp4gIE4sswnfHpuSdJ2Fx345_sk0",
   authDomain: "mantra-54151.firebaseapp.com",
@@ -13,4 +13,4 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 export const auth=getAuth(app);
 export const provider= new GoogleAuthProvider()
-export {signInWithEmailAndPassword}
+export {signInWithEmailAndPassword,createUserWithEmailAndPassword}

@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+// import {createUserWithEmailAndPassword} from 'firebase/auth'
+import { auth,createUserWithEmailAndPassword} from '../../firebase/FirebaseConfig';
 import {
   Heading,
   Text,
@@ -13,6 +15,12 @@ import {
   Grid,
   GridItem,
 } from "@chakra-ui/react";
+import {
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
+} from '@chakra-ui/react'
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { Badge } from "@chakra-ui/react";
@@ -31,6 +39,7 @@ const Register = () => {
   const [matchPass, setMatchPass] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isErr, setIsErr] = useState(false);
+  const [isAlert, setIsAlert] = useState(false)
 
   const handleFirstName = (e) => setFirstName(e.target.value);
   const handleLastName = (e) => setLastName(e.target.value);
@@ -74,7 +83,14 @@ const Register = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    // await new Promise((resolve) => setTimeout(resolve, 2000));
+
+    try {
+      // Create a new user in Firebase Authentication
+      const user = await createUserWithEmailAndPassword(auth, email, passPwd);
+
+      // Access the new user via userCredential.user
+      console.log(' a new User registered successfully:', user);
 
     setIsSubmitting(false);
     setFirstName(firstName);
@@ -88,6 +104,19 @@ const Register = () => {
     setShowPassword2(false);
     // setMatchPass(false);
     setIsSubmitting(false)
+    setIsAlert(true)
+  } catch (error) {
+    console.log('Registration failed:', error.message);
+    console.log(error)
+    // setIsErr(true); // Set error state or handle error as needed
+  } 
+  finally {
+    setIsSubmitting(false);
+    setTimeout(() => {
+      setIsAlert(false)
+    }, 2000);
+    // setIsAlert(false)
+  }
   };
 
   useEffect(() => {
@@ -243,11 +272,13 @@ const Register = () => {
                 </Badge>
               </Stack>
             )}
-            {/* {
-              !matchPass && 
-              <FormErrorMessage>Both passwords must match.</FormErrorMessage>
-
-            } */}
+           {
+isAlert &&
+            <Alert status='success'>
+    <AlertIcon />
+   A new user registered!
+  </Alert>
+            }
 
             <Button
               mt={4}
@@ -259,6 +290,8 @@ const Register = () => {
             >
               Submit
             </Button>
+
+           
           </FormControl>
         </GridItem>
       </Grid>
