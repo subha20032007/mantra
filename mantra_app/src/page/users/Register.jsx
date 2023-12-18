@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from "react";
 import {
   Heading,
   Text,
@@ -12,23 +12,25 @@ import {
   Button,
   Grid,
   GridItem,
-} from '@chakra-ui/react';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import './register.css';
+} from "@chakra-ui/react";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import { Badge } from "@chakra-ui/react";
+import "./register.css";
 
 const Register = () => {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [userName, setUserName] = useState('');
-  const [email, setEmail] = useState('');
-  const [mobile, setMobile] = useState('');
-  const [passPwd, setPassPwd] = useState('');
-  const [passPwd2, setPassPwd2] = useState('');
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [userName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
+  const [mobile, setMobile] = useState("");
+  const [passPwd, setPassPwd] = useState("");
+  const [passPwd2, setPassPwd2] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [showPassword2, setShowPassword2] = useState('');
-  const [matchPass, setMatchPass] = useState(false);
+  const [showPassword2, setShowPassword2] = useState("false");
+  const [matchPass, setMatchPass] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isErr, setIsErr] = useState(false);
 
   const handleFirstName = (e) => setFirstName(e.target.value);
   const handleLastName = (e) => setLastName(e.target.value);
@@ -38,48 +40,62 @@ const Register = () => {
   const handlePassPwd = (e) => setPassPwd(e.target.value);
   const handlePassPwd2 = (e) => setPassPwd2(e.target.value);
 
-  const handleMatch = () => {
-    setShowPassword2(!showPassword2);
-    setMatchPass(passPwd === passPwd2);
-  };
-
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  const passwordRegex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
+  const handleMatch = () => {
+    const match = passPwd.split("").join("");
+    const match2 = passPwd2.split("").join("");
+    console.log(match, match2);
+    if (match !== match2) {
+      setMatchPass(false);
+      setIsErr(true);
+      console.log("password not match");
+    } else {
+      setMatchPass(true);
+      setIsErr(false);
+      console.log("password match");
+    }
+  };
   const isError = {
-    firstName: firstName === '',
-    lastName: lastName === '',
-    userName: userName === '',
+    firstName: firstName === "",
+    lastName: lastName === "",
+    userName: userName === "",
     email: !emailRegex.test(email),
-    mobile: mobile === '' || !/^[0-9]{11}$/.test(mobile),
+    mobile: mobile === "" || !/^[0-9]{11}$/.test(mobile),
     passPwd: !passwordRegex.test(passPwd),
     passPwd2: !passwordRegex.test(passPwd2),
-    matchPass: passPwd !== passPwd2,
+    // matchPass: matchPass !== isErr,
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    // await new Promise((resolve) => setTimeout(resolve, 2000));
 
     setIsSubmitting(false);
-    setFirstName('');
-    setLastName('');
-    setUserName('');
-    setEmail('');
-    setMobile('');
-    setPassPwd('');
-    setPassPwd2('');
+    setFirstName("");
+    setLastName("");
+    setUserName("");
+    setEmail("");
+    setMobile("");
+    setPassPwd("");
+    setPassPwd2("");
     setShowPassword(false);
     setShowPassword2(false);
-    setMatchPass(false);
+    // setMatchPass(false);
   };
+
+  useEffect(() => {
+    handleMatch();
+  }, [isError]);
 
   return (
     <div className="register-main">
       <Grid
-        templateColumns={{ base: '2fr', md: 'repeat(2, 1fr)' }}
+        templateColumns={{ base: "2fr", md: "repeat(2, 1fr)" }}
         gap={6}
         padding={5}
         className="register-form"
@@ -124,7 +140,9 @@ const Register = () => {
             <FormLabel>Mobile Number</FormLabel>
             <Input type="tel" value={mobile} onChange={handleMobile} />
             {isError.mobile && (
-              <FormErrorMessage>Enter a valid 11-digit mobile number.</FormErrorMessage>
+              <FormErrorMessage>
+                Enter a valid 11-digit mobile number.
+              </FormErrorMessage>
             )}
           </FormControl>
         </GridItem>
@@ -144,7 +162,7 @@ const Register = () => {
             <FormLabel>Password</FormLabel>
             <InputGroup>
               <Input
-                type={showPassword ? 'text' : 'password'}
+                type={showPassword ? "text" : "password"}
                 value={passPwd}
                 onChange={handlePassPwd}
               />
@@ -158,7 +176,9 @@ const Register = () => {
             </InputGroup>
             {isError.passPwd && (
               <FormErrorMessage>
-                Password must be at least 8 characters and include at least one uppercase letter, one lowercase letter, one digit, and one special character.
+                Password must be at least 8 characters and include at least one
+                uppercase letter, one lowercase letter, one digit, and one
+                special character.
               </FormErrorMessage>
             )}
           </FormControl>
@@ -169,7 +189,7 @@ const Register = () => {
             <FormLabel>Confirm Password</FormLabel>
             <InputGroup>
               <Input
-                type={showPassword2 ? 'text' : 'password'}
+                type={showPassword2 ? "text" : "password"}
                 value={passPwd2}
                 onChange={handlePassPwd2}
               />
@@ -177,18 +197,34 @@ const Register = () => {
                 {showPassword2 ? (
                   <VisibilityOffIcon onClick={() => setShowPassword2(false)} />
                 ) : (
-                  <VisibilityIcon onClick={handleMatch} />
+                  <VisibilityIcon onClick={() => setShowPassword2(true)} />
                 )}
               </InputRightElement>
             </InputGroup>
             {isError.passPwd2 && (
               <FormErrorMessage>
-                Password must be at least 8 characters and include at least one uppercase letter, one lowercase letter, one digit, and one special character.
+                Password must be at least 8 characters and include at least one
+                uppercase letter, one lowercase letter, one digit, and one
+                special character.
               </FormErrorMessage>
             )}
-            {isError.matchPass && (
+
+            {isErr ? (
               <FormErrorMessage>Both passwords must match.</FormErrorMessage>
+            ) : (
+              <Stack direction="row">
+                <Badge variant="solid" colorScheme="green">
+                  Password Confirmed!
+                </Badge>
+              </Stack>
             )}
+            {/* {
+              !matchPass && 
+              <FormErrorMessage>Both passwords must match.</FormErrorMessage>
+
+            } */}
+           
+
             <Button
               mt={4}
               colorScheme="teal"
