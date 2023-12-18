@@ -1,18 +1,19 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import axios from 'axios'
+
+import { useDispatch } from 'react-redux'
+import { loginAction } from '../../redux/authReducer/action'
 export const Login = () => {
   const [email,setEmail]=useState("")
   const [password,setPassword]=useState("")
-
+const dispatch=useDispatch()
   const handelSubmit=(e)=>{
 e.preventDefault()
-axios.post(`https://reqres.in/api/login`,{email,password})
-.then((res)=>{
-  console.log(res.data.token)
-}).catch((err)=>{
-  console.log(err)
-})
+const userData={
+  email,
+  password
+}
+dispatch(loginAction(userData))
 setEmail("")
 setPassword("")
   }

@@ -26,3 +26,15 @@ export const addProduct=(newProduct)=>(dispatch)=>{
         console.log(err)
     })
 }
+
+export const getProduct=(params={})=>(dispatch)=>{
+    dispatch(requestAction())
+    axios.post(`http://localhost:9090/products`,{params})
+    .then((res)=>{
+        console.log(res.data)
+    dispatch(getAction(res.data))
+    }).catch((err)=>{
+        dispatch(failuerAction())
+        console.log(err)
+    })
+}
