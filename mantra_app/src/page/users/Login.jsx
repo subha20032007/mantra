@@ -1,11 +1,18 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
+import {auth, signInWithEmailAndPassword} from '../../firebase/FirebaseConfig'
+import {signOut, onAuthStateChanged } from 'firebase/auth'
+import Cookies from 'universal-cookie';
 export const Login = () => {
+  const navigate=useNavigate()
+
   const [email,setEmail]=useState("")
   const [password,setPassword]=useState("")
 
   const handelSubmit=(e)=>{
+
 e.preventDefault()
 axios.post(`https://reqres.in/api/login`,{email,password})
 .then((res)=>{
@@ -16,13 +23,28 @@ axios.post(`https://reqres.in/api/login`,{email,password})
 setEmail("")
 setPassword("")
   }
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+      Cookies.set('auth-token', user.refreshToken);
+      navigate('/');
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+  
   return(
     <>
     <DIV>
       <h1>Login Your Account</h1>
       <input onChange={(e)=>{setEmail(e.target.value)}} value={email} placeholder="Enter Your Email" type="email" />
       <input onChange={(e)=>{setPassword(e.target.value)}} value={password} placeholder="Enter Your Password" type="password" />
-      <button onClick={handelSubmit}>Login</button>
+      <button onClick={handleLogin}>Login</button>
+
       <h3 style={{margin:"auto"}}> "email": "eve.holt@reqres.in" <br/>
     "password": "cityslicka"</h3>
     </DIV>
