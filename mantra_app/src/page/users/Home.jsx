@@ -1,4 +1,5 @@
 import React from 'react'
+<<<<<<< HEAD
 import { useNavigate } from 'react-router-dom'
 import {auth} from '../../firebase/FirebaseConfig'
 import {signOut, onAuthStateChanged } from 'firebase/auth'
@@ -9,6 +10,11 @@ import './home.css'
 import LogoutIcon from '@mui/icons-material/Logout';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
+=======
+import styled from 'styled-components'
+import { Sidebar } from '../../componets/user/Sidebar'
+import { ProductList } from '../../componets/user/ProductList'
+>>>>>>> main
 
 export const Home = () => {
   const navigate=useNavigate();
@@ -33,6 +39,7 @@ export const Home = () => {
   });
 
   return (
+<<<<<<< HEAD
       
    <>
    <Grid
@@ -80,5 +87,14 @@ export const Home = () => {
 
 
 
+=======
+    <DIV>
+      <Sidebar/>
+      <ProductList/>
+    </DIV>
+>>>>>>> main
   )
 }
+const DIV=styled.div`
+display: flex;
+`

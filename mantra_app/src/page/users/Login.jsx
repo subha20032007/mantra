@@ -1,25 +1,30 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
+<<<<<<< HEAD
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import {auth, signInWithEmailAndPassword} from '../../firebase/FirebaseConfig'
 import {signOut, onAuthStateChanged } from 'firebase/auth'
 import Cookies from 'universal-cookie';
+=======
+
+import { useDispatch } from 'react-redux'
+import { loginAction } from '../../redux/authReducer/action'
+>>>>>>> main
 export const Login = () => {
   const navigate=useNavigate()
 
   const [email,setEmail]=useState("")
   const [password,setPassword]=useState("")
-
+const dispatch=useDispatch()
   const handelSubmit=(e)=>{
 
 e.preventDefault()
-axios.post(`https://reqres.in/api/login`,{email,password})
-.then((res)=>{
-  console.log(res.data.token)
-}).catch((err)=>{
-  console.log(err)
-})
+const userData={
+  email,
+  password
+}
+dispatch(loginAction(userData))
 setEmail("")
 setPassword("")
   }
