@@ -15,7 +15,6 @@ export function useAuth() {
   const [authUser, authLoading, error] = useAuthState(auth);
   const [isLoading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
-
   useEffect(() => {
     async function fetchData() {
       setLoading(true);
@@ -24,13 +23,11 @@ export function useAuth() {
       setUser(docSnap.data());
       setLoading(false);
     }
-
     if (!authLoading) {
       if (authUser) fetchData();
       else setLoading(false);
     }
   }, [authLoading]);
-
   return { user, isLoading, error };
 }
 
