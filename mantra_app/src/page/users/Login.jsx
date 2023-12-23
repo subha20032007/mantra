@@ -1,23 +1,6 @@
-<<<<<<< HEAD
-import React, { useState } from 'react'
-import styled from 'styled-components'
-
-import { useDispatch } from 'react-redux'
-import { loginAction } from '../../redux/authReducer/action'
-export const Login = () => {
-  const [email,setEmail]=useState("")
-  const [password,setPassword]=useState("")
-const dispatch=useDispatch()
-  const handelSubmit=(e)=>{
-e.preventDefault()
-const userData={
-  email,
-  password
-}
-dispatch(loginAction(userData))
-setEmail("")
-setPassword("")
-=======
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { loginAction } from "../../redux/authReducer/action";
 import {
   Box,
   Button,
@@ -30,29 +13,39 @@ import {
   Link,
   Text,
 } from "@chakra-ui/react";
-import { DASHBOARD, REGISTER, ROOT } from "lib/routes";
 import { Link as RouterLink } from "react-router-dom";
 import { useLogin } from "hooks/auth";
 import { useForm } from "react-hook-form";
 import { emailValidate, passwordValidate } from "utils/form-validate";
 import { fColor, bColor, background, hoverColor } from "utils/ThemeApplication";
+import { ROOT, REGISTER } from "lib/routes";
 
 export default function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const dispatch = useDispatch();
   const { login, isLoading } = useLogin();
   const {
     register,
-    handleSubmit,
+    handleSubmit: formHandleSubmit,
     formState: { errors },
   } = useForm();
 
-  async function handleLogin(data) {
+  const handleLogin = async (data) => {
     login({
       email: data.email,
       password: data.password,
       redirectTo: ROOT,
     });
->>>>>>> dev-khurram
-  }
+  };
+
+  const onSubmit = (data) => {
+    dispatch(loginAction(data));
+    setEmail("");
+    setPassword("");
+    handleLogin(data);
+  };
 
   return (
     <>
@@ -60,8 +53,6 @@ export default function Login() {
         className="main"
         style={{
           background: background,
-
-          // padding: "15px",
         }}
       >
         <Center w="100%" h="100vh">
@@ -79,7 +70,7 @@ export default function Login() {
               Log In
             </Heading>
 
-            <form onSubmit={handleSubmit(handleLogin)}>
+            <form onSubmit={formHandleSubmit(onSubmit)}>
               <FormControl isInvalid={errors.email} py="2">
                 <FormLabel>Email</FormLabel>
                 <Input
@@ -142,54 +133,6 @@ export default function Login() {
           </Box>
         </Center>
       </div>
-
-      <div>
-        {/* <h1>Login Your Account</h1>
-        <input
-          onChange={(e) => {
-            setEmail(e.target.value);
-          }}
-          value={email}
-          placeholder="Enter Your Email"
-          type="email"
-        />
-        <input
-          onChange={(e) => {
-            setPassword(e.target.value);
-          }}
-          value={password}
-          placeholder="Enter Your Password"
-          type="password"
-        />
-        <button onClick={handleLogin}>Login</button> */}
-      </div>
     </>
   );
 }
-
-// const DIV = styled.div`
-//   display: flex;
-//   gap: 20px;
-//   width: 23%;
-//   padding: 3%;
-//   border: 1px solid black;
-//   margin: auto;
-//   flex-direction: column;
-//   margin-top: 40px;
-//   input {
-//     height: 20px;
-//   }
-//   button {
-//     width: 90%;
-//     background-color: black;
-//     color: white;
-//     margin: auto;
-//     padding: 2%;
-//   }
-//   h1 {
-//     margin: auto;
-//   }
-//   h3 {
-//     margin: auto;
-//   }
-// `;
