@@ -12,6 +12,7 @@ export const ProductCard = ({ img, name, price, brand, category, gender }) => {
       <h3>Category:{category}</h3>
       <p>Gender:{gender}</p>
 
+
     </DIV>
   )
 }

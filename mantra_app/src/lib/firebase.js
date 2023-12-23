@@ -1,12 +1,8 @@
-// Import
 import { initializeApp } from "firebase/app";
-import {
-  getAuth,
-  GoogleAuthProvider,
-  signOut,
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-} from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
+import { getStorage } from "firebase/storage";
+
 const firebaseConfig = {
   apiKey: "AIzaSyC71Vxlp4gIE4sswnfHpuSdJ2Fx345_sk0",
   authDomain: "mantra-54151.firebaseapp.com",
@@ -16,7 +12,7 @@ const firebaseConfig = {
   appId: "1:391998901191:web:cafb086fc2ab5231a0e7e2",
 };
 
-const app = initializeApp(firebaseConfig);
+export const app = initializeApp(firebaseConfig);
+export const db = getFirestore(app);
 export const auth = getAuth(app);
-export const provider = new GoogleAuthProvider();
-export { signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut };
+export const storage = getStorage(app);
