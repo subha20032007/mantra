@@ -3,8 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { auth } from "../../firebase/FirebaseConfig";
 import { signOut, onAuthStateChanged } from "firebase/auth";
 import Cookies from "universal-cookie";
-import { Grid, GridItem } from "@chakra-ui/react";
+import { Center, Grid, GridItem } from "@chakra-ui/react";
 import { Button } from "@chakra-ui/react";
+import { fColor, bColor, hoverColor } from "utils/ThemeApplication";
 import LogoutIcon from "@mui/icons-material/Logout";
 
 const Home = () => {
@@ -41,19 +42,14 @@ const Home = () => {
         color="blackAlpha.700"
         fontWeight="bold"
       >
-        <GridItem pl="2" bg="orange.300" area="header">
-          <div className="header">
-            <h2>Welcome to the Home page</h2>
-          </div>
+        <GridItem bg="orange.300" w="100%" h="90vh" area="header">
+          <Center className="">
+            <h1>Welcome to the Home page</h1>
+          </Center>
         </GridItem>
-        <GridItem pl="2" bg="pink.300" area="nav">
-          Nav
-        </GridItem>
-        <GridItem pl="2" bg="green.300" area="main">
-          Main
-        </GridItem>
+
         <GridItem
-          pl="4"
+          // pl="4"
           bg="blue.300"
           area="footer"
           height={100}
@@ -63,7 +59,14 @@ const Home = () => {
             justifyContent: "center",
           }}
         >
-          <Button colorScheme="teal" variant="solid" onClick={signUserOut}>
+          <Button
+            colorScheme="teal"
+            variant="solid"
+            onClick={signUserOut}
+            backgroundColor={bColor}
+            _hover={{ backgroundColor: hoverColor }}
+            color={fColor}
+          >
             <span style={{ marginRight: "5px" }}>Logout</span>
             <LogoutIcon />
           </Button>
