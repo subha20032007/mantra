@@ -10,7 +10,7 @@ const initialProducts={
   gender:"",
   category:""
 }
-export const Admin = () => {
+export default function Admin (){
 
   const [products,setProducts]=useState(initialProducts)
 const dispatch=useDispatch()

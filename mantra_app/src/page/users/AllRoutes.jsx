@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from "react";
 import { Routes } from "react-router-dom";
 import { Route } from "react-router-dom";
-import { Admin } from "../admin/Admin";
+import Admin from "../admin/Admin";
 import Login from "./Login";
 import Home from "./Home";
 import { auth } from "../../firebase/FirebaseConfig";

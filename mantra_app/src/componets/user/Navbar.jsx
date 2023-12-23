@@ -6,10 +6,10 @@ import { fColor, bColor } from "utils/ThemeApplication";
 export const Navbar = () => {
   return (
     <DIV>
-      <Link  to="/" color={bColor} as={RouterLink}>
+      <Link to="/" color={bColor} as={RouterLink}>
         Home
       </Link>
-      <Link to="/admin" color={bColor}>
+      <Link to="/admin" color={bColor} as={RouterLink}>
         Admin
       </Link>
     </DIV>
