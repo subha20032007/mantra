@@ -7,6 +7,7 @@ export const Navbar = () => {
       <Link className='nav-text' to="/">Home</Link>
       <Link className='nav-text' to="login">Login</Link>
       <Link className='nav-text' to="/admin">Admin</Link>
+      <Link className='nav-text' to="/register"> Register </Link>
     </DIV>
   )
 }
